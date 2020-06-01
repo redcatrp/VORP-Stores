@@ -22,15 +22,18 @@ namespace vorpstores_cl.Menus
 
             MenuController.EnableMenuToggleKeyOnController = false;
             MenuController.MenuToggleKey = (Control)0;
-            ;
-            mainMenu.AddMenuItem(new MenuItem(GetConfig.Langs["BuyButton"], " ")
+
+            MenuController.AddSubmenu(mainMenu, BuyMenu.GetMenu());
+
+            MenuItem subMenuBuyBtn = new MenuItem(GetConfig.Langs["BuyButton"], " ")
             {
-                Enabled = true,
-            });
-            mainMenu.AddMenuItem(new MenuItem(GetConfig.Langs["SellButton"], " ")
-            {
-                Enabled = false,
-            });
+                RightIcon = MenuItem.Icon.ARROW_RIGHT
+            };
+
+            mainMenu.AddMenuItem(subMenuBuyBtn);
+            MenuController.BindMenuItem(mainMenu, BuyMenu.GetMenu(), subMenuBuyBtn);
+
+
         }
         public static Menu GetMenu()
         {

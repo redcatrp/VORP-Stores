@@ -1,6 +1,7 @@
 {
-  "DescMainMenu":  "Compra y Vende",
+  "DescMainMenu": "Compra y Vende",
   "BuyButton": "Comprar",
+  "BuyMenuDesc": "Comprar Articulos",
   "SellButton": "Vender",
   "PressToOpen": "Pulsa [~e~Espacio~q~] para acceder a la tienda"
 }

@@ -15,14 +15,15 @@ namespace vorpstores_cl
     {
         public static JObject Config = new JObject();
         public static Dictionary<string, string> Langs = new Dictionary<string, string>();
+        public static JObject ItemsFromDB = new JObject();
 
         public GetConfig()
         {
-            EventHandlers[$"{API.GetCurrentResourceName()}:SendConfig"] += new Action<string, ExpandoObject>(LoadDefaultConfig);
+            EventHandlers[$"{API.GetCurrentResourceName()}:SendConfig"] += new Action<string, ExpandoObject, string>(LoadDefaultConfig);
             TriggerServerEvent($"{API.GetCurrentResourceName()}:getConfig");
         }
 
-        private void LoadDefaultConfig(string dc, ExpandoObject dl)
+        private void LoadDefaultConfig(string dc, ExpandoObject dl, string ifdb)
         {
             Config = JObject.Parse(dc);
 
@@ -31,6 +32,7 @@ namespace vorpstores_cl
                 Langs[l.Key] = l.Value.ToString();
             }
 
+            ItemsFromDB = JObject.Parse(ifdb);
 
             vorpstores_init.InitStores();
 

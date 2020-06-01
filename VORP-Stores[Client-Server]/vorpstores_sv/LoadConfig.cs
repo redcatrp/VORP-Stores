@@ -18,11 +18,14 @@ namespace vorpstores_sv
         public static Dictionary<string, string> Langs = new Dictionary<string, string>();
         public static string resourcePath = $"{API.GetResourcePath(API.GetCurrentResourceName())}";
 
+        public static Dictionary<string, Dictionary<string, object>> ItemsFromDB = new Dictionary<string, Dictionary<string, object>>();
+
         public LoadConfig()
         {
             EventHandlers[$"{API.GetCurrentResourceName()}:getConfig"] += new Action<Player>(getConfig);
 
             LoadConfigAndLang();
+            LoadItemsFromDB();
         }
 
         private void LoadConfigAndLang()
@@ -48,9 +51,35 @@ namespace vorpstores_sv
             }
         }
 
+        public async Task LoadItemsFromDB()
+        {
+            Exports["ghmattimysql"].execute("SELECT * FROM items", new[] { "" }, new Action<dynamic>((result) =>
+            {
+                if (result.Count == 0)
+                {
+                    Debug.WriteLine("ERROR: No Items In DB");
+                }
+                else
+                {
+                    
+                    foreach (var i in result)
+                    {
+                        Dictionary<string, object> data_item = new Dictionary<string, object>();
+                        data_item.Add("label", i.label);
+                        data_item.Add("limit", i.limit);
+                        data_item.Add("type", i.type);
+                        ItemsFromDB.Add(i.item, data_item);
+                    }
+
+                }
+
+            }));
+        }
+
         private void getConfig([FromSource]Player source)
         {
-            source.TriggerEvent($"{API.GetCurrentResourceName()}:SendConfig", ConfigString, Langs);
+            string SItemsFromDB = JsonConvert.SerializeObject(ItemsFromDB);
+            source.TriggerEvent($"{API.GetCurrentResourceName()}:SendConfig", ConfigString, Langs, SItemsFromDB);
         }
     }
 }
