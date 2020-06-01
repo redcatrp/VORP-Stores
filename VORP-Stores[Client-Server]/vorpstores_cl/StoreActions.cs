@@ -53,16 +53,20 @@ namespace vorpstores_cl
 
         public static async Task ExitBuyStore()
         {
-            MenuController.CloseAllMenus();
-            TriggerEvent("vorp:setInstancePlayer", false);
-            NetworkSetInSpectatorMode(false, PlayerPedId());
-            FreezeEntityPosition(PlayerPedId(), false);
-            SetEntityVisible(PlayerPedId(), true);
-            SetCamActive(CamStore, false);
-            RenderScriptCams(false, true, 1000, true, true, 0);
-            DestroyCam(CamStore, true);
+            await Delay(100);
+            if (!MenuController.IsAnyMenuOpen())
+            {
+                TriggerEvent("vorp:setInstancePlayer", false);
+                NetworkSetInSpectatorMode(false, PlayerPedId());
+                FreezeEntityPosition(PlayerPedId(), false);
+                SetEntityVisible(PlayerPedId(), true);
+                SetCamActive(CamStore, false);
+                RenderScriptCams(false, true, 1000, true, true, 0);
+                DestroyCam(CamStore, true);
 
-            DeleteObject(ref ObjectStore);
+                DeleteObject(ref ObjectStore);
+            }
+  
         }
 
     }

@@ -2,6 +2,10 @@
   "DescMainMenu": "Compra y Vende",
   "BuyButton": "Comprar",
   "BuyMenuDesc": "Comprar Articulos",
+  "BuyMenuConfirmDesc": "Confirmar compra",
+  "BuyConfirmButtonYes": "Comprar {0} de {1}",
+  "BuyConfirmButtonNo": "Cancelar compra",
   "SellButton": "Vender",
+  "NoMoney": "No tienes suficiente dinero",
   "PressToOpen": "Pulsa [~e~Espacio~q~] para acceder a la tienda"
 }
