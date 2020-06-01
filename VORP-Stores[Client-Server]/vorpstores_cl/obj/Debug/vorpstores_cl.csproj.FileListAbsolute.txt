@@ -1,0 +1,5 @@
+E:\VORP-Repos\VORP-Stores\VORP-Stores[Client-Server]\build\vorp_stores\vorpstores_cl.net.dll
+E:\VORP-Repos\VORP-Stores\VORP-Stores[Client-Server]\build\vorp_stores\vorpstores_cl.net.pdb
+E:\VORP-Repos\VORP-Stores\VORP-Stores[Client-Server]\vorpstores_cl\obj\Debug\vorpstores_cl.csprojAssemblyReference.cache
+E:\VORP-Repos\VORP-Stores\VORP-Stores[Client-Server]\vorpstores_cl\obj\Debug\vorpstores_cl.net.dll
+E:\VORP-Repos\VORP-Stores\VORP-Stores[Client-Server]\vorpstores_cl\obj\Debug\vorpstores_cl.net.pdb
