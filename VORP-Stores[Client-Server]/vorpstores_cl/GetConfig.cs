@@ -33,6 +33,8 @@ namespace vorpstores_cl
 
 
             vorpstores_init.InitStores();
+
+            Menus.MainMenu.GetMenu();
         }
     }
 }

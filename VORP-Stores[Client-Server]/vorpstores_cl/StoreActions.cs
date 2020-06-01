@@ -32,9 +32,10 @@ namespace vorpstores_cl
             RenderScriptCams(true, true, 500, true, true, 0);
             CreateObjectOnTable(storeId);
 
-            Menu MyMenu = MenuStore.LoadMenu();
+            MenuController.MainMenu.MenuTitle = GetConfig.Config["Stores"][storeId]["name"].ToString();
 
-            MyMenu.OpenMenu();
+            MenuController.MainMenu.OpenMenu();
+
 
             await Delay(10000);
             ExitBuyStore();

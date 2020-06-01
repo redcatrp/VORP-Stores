@@ -1,6 +1,16 @@
 {
   "defaultlang": "Es", // set your language
 
+
+  "Items": [
+    {
+      "Name": "banana", // name in DB Items
+      "BuyPrice": 12.5,
+      "SellPrice": 5.2,
+      "ObjectModel": "p_banana01x"
+    }
+  ],
+
   "Stores": [
     {
       "name": "Tienda General",
