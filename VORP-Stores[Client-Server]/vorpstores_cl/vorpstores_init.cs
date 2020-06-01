@@ -20,6 +20,7 @@ namespace vorpstores_cl
         public static async Task InitStores()
         {
             await Delay(10000);
+            Menus.MainMenu.GetMenu();
             string ped = "U_M_M_ValGenStoreOwner_01";
             uint HashPed = (uint)API.GetHashKey(ped);
             await LoadModel(HashPed);

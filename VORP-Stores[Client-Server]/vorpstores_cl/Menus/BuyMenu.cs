@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace vorpstores_cl.Menus
 {
-    class BuyMenu : BaseScript
+    class BuyMenu
     {
         private static Menu buyMenu = new Menu(GetConfig.Langs["BuyButton"], GetConfig.Langs["BuyMenuDesc"]);
         private static Menu buyMenuConfirm = new Menu("", GetConfig.Langs["BuyMenuConfirmDesc"]);
@@ -62,8 +62,8 @@ namespace vorpstores_cl.Menus
             buyMenu.OnListItemSelect += (_menu, _listItem, _listIndex, _itemIndex) =>
             {
                 // Code in here would get executed whenever a list item is pressed.
-                //indexItem = _itemIndex;
-                //quantityItem = _listIndex + 1;
+                indexItem = _itemIndex;
+                quantityItem = _listIndex + 1;
                 buyMenuConfirm.MenuTitle = GetConfig.ItemsFromDB[GetConfig.Config["Items"][_itemIndex]["Name"].ToString()]["label"].ToString();
                 subMenuConfirmBuyBtnYes.Label = string.Format(GetConfig.Langs["BuyConfirmButtonYes"], (_listIndex + 1).ToString(), GetConfig.ItemsFromDB[GetConfig.Config["Items"][_itemIndex]["Name"].ToString()]["label"].ToString());
             };
@@ -80,18 +80,18 @@ namespace vorpstores_cl.Menus
                 StoreActions.CreateObjectOnTable(_menu.CurrentIndex);
             };
 
-            //buyMenuConfirm.OnItemSelect += (_menu, _item, _index) =>
-            //{
-            //    if(_index == 0)
-            //    {
-            //        TriggerServerEvent("vorpstores:buyItems", GetConfig.Config["Items"][indexItem]["Name"].ToString(), quantityItem, GetConfig.Config["Items"][indexItem]["BuyPrice"]);
-            //        buyMenu.OpenMenu();
-            //    }
-            //    else
-            //    {
-            //        buyMenu.OpenMenu();
-            //    }
-            //};
+            buyMenuConfirm.OnItemSelect += (_menu, _item, _index) =>
+            {
+                if (_index == 0)
+                {
+                    StoreActions.BuyItemStore(indexItem, quantityItem);
+                    buyMenu.OpenMenu();
+                }
+                else
+                {
+                    buyMenu.OpenMenu();
+                }
+            };
 
         }
         public static Menu GetMenu()

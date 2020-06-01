@@ -69,5 +69,10 @@ namespace vorpstores_cl
   
         }
 
+        public static async Task BuyItemStore(int indexItem, int quantityItem)
+        {
+            TriggerServerEvent("vorpstores:buyItems", GetConfig.Config["Items"][indexItem]["Name"].ToString(), quantityItem, GetConfig.Config["Items"][indexItem]["BuyPrice"]);
+        }
+
     }
 }
