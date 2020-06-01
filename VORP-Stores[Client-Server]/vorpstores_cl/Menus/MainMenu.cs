@@ -33,6 +33,10 @@ namespace vorpstores_cl.Menus
             mainMenu.AddMenuItem(subMenuBuyBtn);
             MenuController.BindMenuItem(mainMenu, BuyMenu.GetMenu(), subMenuBuyBtn);
 
+            mainMenu.OnMenuClose += (_menu) =>
+            {
+                StoreActions.ExitBuyStore();
+            };
 
         }
         public static Menu GetMenu()

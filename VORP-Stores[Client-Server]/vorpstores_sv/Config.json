@@ -8,6 +8,18 @@
       "BuyPrice": 12.5,
       "SellPrice": 5.2,
       "ObjectModel": "p_banana01x"
+    },
+    {
+      "Name": "bread", // name in DB Items
+      "BuyPrice": 12.5,
+      "SellPrice": 5.2,
+      "ObjectModel": "p_bread01x"
+    },
+    {
+      "Name": "water", // name in DB Items
+      "BuyPrice": 12.5,
+      "SellPrice": 5.2,
+      "ObjectModel": "p_water01x"
     }
   ],
 

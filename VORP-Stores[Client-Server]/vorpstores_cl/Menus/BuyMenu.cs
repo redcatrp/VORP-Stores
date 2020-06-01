@@ -31,13 +31,25 @@ namespace vorpstores_cl.Menus
 
             foreach (var item in GetConfig.Config["Items"])
             {
-                MenuListItem _itemToBuy = new MenuListItem(item["Name"].ToString(), quantityList, 0, "")
+                MenuListItem _itemToBuy = new MenuListItem(GetConfig.ItemsFromDB[item["Name"].ToString()]["label"].ToString() + $" ${item["BuyPrice"]}" , quantityList, 0, "")
                 {
 
                 };
 
                 buyMenu.AddMenuItem(_itemToBuy);
             }
+
+            buyMenu.OnIndexChange += (_menu, _oldItem, _newItem, _oldIndex, _newIndex) =>
+            {
+                // Code in here would get executed whenever the up or down key is pressed and the index of the menu is changed.
+                Debug.WriteLine($"OnIndexChange: [{_menu}, {_oldItem}, {_newItem}, {_oldIndex}, {_newIndex}]");
+                StoreActions.CreateObjectOnTable(_newIndex);
+            };
+
+            buyMenu.OnMenuOpen += (_menu) =>
+            {
+                StoreActions.CreateObjectOnTable(_menu.CurrentIndex);
+            };
 
         }
         public static Menu GetMenu()

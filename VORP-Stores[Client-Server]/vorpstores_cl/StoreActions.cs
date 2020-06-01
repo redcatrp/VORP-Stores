@@ -11,10 +11,12 @@ namespace vorpstores_cl
 {
     public class StoreActions : BaseScript
     {
-        private static int CamStore;
         private static int ObjectStore;
+        private static int CamStore;
+        private static int LaststoreId;
         public static async Task EnterBuyStore(int storeId)
         {
+            LaststoreId = storeId;
             float Camerax = float.Parse(GetConfig.Config["Stores"][storeId]["CameraMain"][0].ToString());
             float Cameray = float.Parse(GetConfig.Config["Stores"][storeId]["CameraMain"][1].ToString());
             float Cameraz = float.Parse(GetConfig.Config["Stores"][storeId]["CameraMain"][2].ToString());
@@ -30,30 +32,28 @@ namespace vorpstores_cl
             CamStore = CreateCamWithParams("DEFAULT_SCRIPTED_CAMERA", Camerax, Cameray, Cameraz, CameraRotx, CameraRoty, CameraRotz, 50.00f, false, 0);
             SetCamActive(CamStore, true);
             RenderScriptCams(true, true, 500, true, true, 0);
-            CreateObjectOnTable(storeId);
 
             MenuController.MainMenu.MenuTitle = GetConfig.Config["Stores"][storeId]["name"].ToString();
 
             MenuController.MainMenu.OpenMenu();
 
-
-            await Delay(10000);
-            ExitBuyStore();
         }
 
-        public static async Task CreateObjectOnTable(int storeId)
+        public static async Task CreateObjectOnTable(int index)
         {
-            float objectX = float.Parse(GetConfig.Config["Stores"][storeId]["SpawnObjectStore"][0].ToString());
-            float objectY = float.Parse(GetConfig.Config["Stores"][storeId]["SpawnObjectStore"][1].ToString());
-            float objectZ = float.Parse(GetConfig.Config["Stores"][storeId]["SpawnObjectStore"][2].ToString());
-            float objectH = float.Parse(GetConfig.Config["Stores"][storeId]["SpawnObjectStore"][3].ToString());
-            uint idObject = (uint)GetHashKey("p_banana01x");
+            DeleteObject(ref ObjectStore);
+            float objectX = float.Parse(GetConfig.Config["Stores"][LaststoreId]["SpawnObjectStore"][0].ToString());
+            float objectY = float.Parse(GetConfig.Config["Stores"][LaststoreId]["SpawnObjectStore"][1].ToString());
+            float objectZ = float.Parse(GetConfig.Config["Stores"][LaststoreId]["SpawnObjectStore"][2].ToString());
+            float objectH = float.Parse(GetConfig.Config["Stores"][LaststoreId]["SpawnObjectStore"][3].ToString());
+            uint idObject = (uint)GetHashKey(GetConfig.Config["Items"][index]["ObjectModel"].ToString());
             await vorpstores_init.LoadModel(idObject);
             ObjectStore = CreateObject(idObject, objectX, objectY, objectZ, false, true, true, true, true);
         }
 
         public static async Task ExitBuyStore()
         {
+            MenuController.CloseAllMenus();
             TriggerEvent("vorp:setInstancePlayer", false);
             NetworkSetInSpectatorMode(false, PlayerPedId());
             FreezeEntityPosition(PlayerPedId(), false);
