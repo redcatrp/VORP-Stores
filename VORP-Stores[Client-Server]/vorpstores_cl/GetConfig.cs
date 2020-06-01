@@ -24,7 +24,6 @@ namespace vorpstores_cl
 
         private void LoadDefaultConfig(string dc, ExpandoObject dl)
         {
-
             Config = JObject.Parse(dc);
 
             foreach (var l in dl)
@@ -32,6 +31,8 @@ namespace vorpstores_cl
                 Langs[l.Key] = l.Value.ToString();
             }
 
+
+            vorpstores_init.InitStores();
         }
     }
 }

@@ -3,3 +3,5 @@ E:\VORP-Repos\VORP-Stores\VORP-Stores[Client-Server]\build\vorp_stores\vorpstore
 E:\VORP-Repos\VORP-Stores\VORP-Stores[Client-Server]\vorpstores_sv\obj\Debug\vorpstores_sv.csprojAssemblyReference.cache
 E:\VORP-Repos\VORP-Stores\VORP-Stores[Client-Server]\vorpstores_sv\obj\Debug\vorpstores_sv.net.dll
 E:\VORP-Repos\VORP-Stores\VORP-Stores[Client-Server]\vorpstores_sv\obj\Debug\vorpstores_sv.net.pdb
+E:\VORP-Repos\VORP-Stores\VORP-Stores[Client-Server]\build\vorp_stores\Config.json
+E:\VORP-Repos\VORP-Stores\VORP-Stores[Client-Server]\build\vorp_stores\Es.json
