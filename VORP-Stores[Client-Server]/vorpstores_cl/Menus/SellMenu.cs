@@ -82,10 +82,12 @@ namespace vorpstores_cl.Menus
                 {
                     StoreActions.SellItemStore(indexItem, quantityItem);
                     sellMenu.OpenMenu();
+                    sellMenuConfirm.CloseMenu();
                 }
                 else
                 {
                     sellMenu.OpenMenu();
+                    sellMenuConfirm.CloseMenu();
                 }
             };
 
