@@ -36,7 +36,6 @@ namespace vorpstores_cl
             MenuController.MainMenu.MenuTitle = GetConfig.Config["Stores"][storeId]["name"].ToString();
 
             MenuController.MainMenu.OpenMenu();
-
         }
 
         public static async Task CreateObjectOnTable(int index)
@@ -71,7 +70,8 @@ namespace vorpstores_cl
 
         public static async Task BuyItemStore(int indexItem, int quantityItem)
         {
-            TriggerServerEvent("vorpstores:buyItems", GetConfig.Config["Items"][indexItem]["Name"].ToString(), quantityItem, GetConfig.Config["Items"][indexItem]["BuyPrice"]);
+            TriggerServerEvent("vorpstores:buyItems", GetConfig.Config["Items"][indexItem]["Name"].ToString(), quantityItem, GetConfig.Config["Items"][indexItem]["BuyPrice"].ToObject<double>());
+            Debug.WriteLine("Funca");
         }
 
     }

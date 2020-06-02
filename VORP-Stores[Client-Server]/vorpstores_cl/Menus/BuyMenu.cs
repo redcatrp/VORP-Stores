@@ -61,11 +61,11 @@ namespace vorpstores_cl.Menus
 
             buyMenu.OnListItemSelect += (_menu, _listItem, _listIndex, _itemIndex) =>
             {
-                // Code in here would get executed whenever a list item is pressed.
                 indexItem = _itemIndex;
                 quantityItem = _listIndex + 1;
+                double totalPrice = double.Parse(GetConfig.Config["Items"][_itemIndex]["BuyPrice"].ToString()) * quantityItem;
                 buyMenuConfirm.MenuTitle = GetConfig.ItemsFromDB[GetConfig.Config["Items"][_itemIndex]["Name"].ToString()]["label"].ToString();
-                subMenuConfirmBuyBtnYes.Label = string.Format(GetConfig.Langs["BuyConfirmButtonYes"], (_listIndex + 1).ToString(), GetConfig.ItemsFromDB[GetConfig.Config["Items"][_itemIndex]["Name"].ToString()]["label"].ToString());
+                subMenuConfirmBuyBtnYes.Label = string.Format(GetConfig.Langs["BuyConfirmButtonYes"], (_listIndex + 1).ToString(), GetConfig.ItemsFromDB[GetConfig.Config["Items"][_itemIndex]["Name"].ToString()]["label"].ToString(), totalPrice.ToString());
             };
 
             buyMenu.OnIndexChange += (_menu, _oldItem, _newItem, _oldIndex, _newIndex) =>

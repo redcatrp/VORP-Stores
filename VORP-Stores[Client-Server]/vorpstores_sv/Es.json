@@ -3,7 +3,7 @@
   "BuyButton": "Comprar",
   "BuyMenuDesc": "Comprar Articulos",
   "BuyMenuConfirmDesc": "Confirmar compra",
-  "BuyConfirmButtonYes": "Comprar {0} de {1}",
+  "BuyConfirmButtonYes": "Comprar {0} de {1} por ${2}",
   "BuyConfirmButtonNo": "Cancelar compra",
   "SellButton": "Vender",
   "NoMoney": "No tienes suficiente dinero",

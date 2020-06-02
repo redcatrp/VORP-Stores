@@ -27,7 +27,8 @@ namespace vorpstores_sv
 
                 if ((cost * quantity) <= money)
                 {
-                    TriggerEvent("vorp:removeMoney", _source, 0, (cost * quantity));
+                    Debug.WriteLine("Entra " + (cost * quantity).ToString()); 
+                    TriggerEvent("vorp:removeMoney", _source, 0, (double)(cost * quantity));
                 }
                 else
                 {
