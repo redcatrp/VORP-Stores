@@ -1,1 +1,19 @@
-
+{
+  "DescMainMenu": "Buy & Sell",
+  "BuyButton": "Buy",
+  "BuyMenuDesc": "Buy articles",
+  "BuyMenuConfirmDesc": "Confirm",
+  "BuyConfirmButtonYes": "Buy {0} {1} for ${2}",
+  "BuyConfirmButtonNo": "Cancel",
+  "SellButton": "Sell",
+  "SellMenuDesc": "Sell articles",
+  "SellMenuConfirmDesc": "Confirm",
+  "SellConfirmButtonYes": "Sell {0} {1} for ${2}",
+  "SellConfirmButtonNo": "Cancel",
+  "NoMoney": "You do not have enought money",
+  "NoMore": "You can not carry more {0}",
+  "NoEnought": "You do not have enought articles",
+  "Bought": "You bought {0} {1} for ${2}",
+  "Sold": "You sold {0} {1} for ${2}",
+  "PressToOpen": "Press [~e~Espacio~q~] to access the store"
+}
