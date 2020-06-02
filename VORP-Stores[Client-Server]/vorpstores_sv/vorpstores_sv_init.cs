@@ -13,7 +13,7 @@ namespace vorpstores_sv
         public vorpstores_sv_init()
         {
             EventHandlers["vorpstores:buyItems"] += new Action<Player, string, int, double>(buyItems);
-            EventHandlers["vorpstores:sellItems"] += new Action<Player, double, string>(sellItems);
+            EventHandlers["vorpstores:sellItems"] += new Action<Player, string, int, double>(sellItems);
         }
         private void buyItems([FromSource]Player source, string name, int quantity, double cost)
         {
@@ -40,7 +40,7 @@ namespace vorpstores_sv
                         {
                             TriggerEvent("vorp:removeMoney", _source, 0, totalCost);
                             TriggerEvent("vorpCore:addItem", _source, name, quantity);
-                            source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Buyed"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
+                            source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Bought"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
                         }
 
                     }), name);
@@ -55,8 +55,29 @@ namespace vorpstores_sv
             }));
         }
 
-        private void sellItems([FromSource]Player source, double totalCost, string jsonCloths)
+        private void sellItems([FromSource]Player source, string name, int quantity, double cost)
         {
+            int _source = int.Parse(source.Handle);
+
+            string sid = "steam:" + source.Identifiers["steam"];
+
+            double totalCost = (double)(cost * quantity);
+
+            TriggerEvent("vorpCore:getItemCount", _source, new Action<dynamic>((itemcount) =>
+            {
+                int count = itemcount;
+                if (quantity > count)
+                {
+                    source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoEnought"], 4000);
+                }
+                else
+                {
+                    TriggerEvent("vorp:addMoney", _source, 0, totalCost);
+                    TriggerEvent("vorpCore:subItem", _source, name, quantity);
+                    source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Sold"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
+                }
+
+            }), name);
 
         }
 

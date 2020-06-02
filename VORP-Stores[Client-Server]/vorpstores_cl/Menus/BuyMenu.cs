@@ -36,11 +36,11 @@ namespace vorpstores_cl.Menus
                 quantityList.Add($"Cantidad #{i}");
             }
 
-            foreach (var item in GetConfig.Config["Items"])
+            foreach (var item in GetConfig.Config["ItemsBuy"])
             {
                 MenuListItem _itemToBuy = new MenuListItem(GetConfig.ItemsFromDB[item["Name"].ToString()]["label"].ToString() + $" ${item["BuyPrice"]}" , quantityList, 0, "")
                 {
-
+                
                 };
 
                 buyMenu.AddMenuItem(_itemToBuy);
@@ -63,19 +63,19 @@ namespace vorpstores_cl.Menus
             {
                 indexItem = _itemIndex;
                 quantityItem = _listIndex + 1;
-                double totalPrice = double.Parse(GetConfig.Config["Items"][_itemIndex]["BuyPrice"].ToString()) * quantityItem;
-                buyMenuConfirm.MenuTitle = GetConfig.ItemsFromDB[GetConfig.Config["Items"][_itemIndex]["Name"].ToString()]["label"].ToString();
-                subMenuConfirmBuyBtnYes.Label = string.Format(GetConfig.Langs["BuyConfirmButtonYes"], (_listIndex + 1).ToString(), GetConfig.ItemsFromDB[GetConfig.Config["Items"][_itemIndex]["Name"].ToString()]["label"].ToString(), totalPrice.ToString());
+                double totalPrice = double.Parse(GetConfig.Config["ItemsBuy"][_itemIndex]["BuyPrice"].ToString()) * quantityItem;
+                buyMenuConfirm.MenuTitle = GetConfig.ItemsFromDB[GetConfig.Config["ItemsBuy"][_itemIndex]["Name"].ToString()]["label"].ToString();
+                subMenuConfirmBuyBtnYes.Label = string.Format(GetConfig.Langs["BuyConfirmButtonYes"], (_listIndex + 1).ToString(), GetConfig.ItemsFromDB[GetConfig.Config["ItemsBuy"][_itemIndex]["Name"].ToString()]["label"].ToString(), totalPrice.ToString());
             };
 
             buyMenu.OnIndexChange += (_menu, _oldItem, _newItem, _oldIndex, _newIndex) =>
             {
-                StoreActions.CreateObjectOnTable(_newIndex);
+                StoreActions.CreateObjectOnTable(_newIndex, "ItemsBuy");
             };
 
             buyMenu.OnMenuOpen += (_menu) =>
             {
-                StoreActions.CreateObjectOnTable(_menu.CurrentIndex);
+                StoreActions.CreateObjectOnTable(_menu.CurrentIndex, "ItemsBuy");
             };
 
             buyMenuConfirm.OnItemSelect += (_menu, _item, _index) =>

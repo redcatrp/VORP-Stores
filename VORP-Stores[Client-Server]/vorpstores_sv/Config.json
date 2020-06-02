@@ -1,23 +1,33 @@
 {
   "defaultlang": "Es", // set your language
 
-
-  "Items": [
+  //If any price is set to -1, it will not appear in the list
+  "ItemsBuy": [
     {
       "Name": "banana", // name in DB Items
       "BuyPrice": 12.5,
-      "SellPrice": 5.2,
       "ObjectModel": "p_banana01x"
     },
     {
       "Name": "bread", // name in DB Items
       "BuyPrice": 12.5,
-      "SellPrice": 5.2,
       "ObjectModel": "p_bread01x"
     },
     {
       "Name": "water", // name in DB Items
       "BuyPrice": 12.5,
+      "ObjectModel": "p_water01x"
+    }
+  ],
+
+  "ItemsSell": [
+    {
+      "Name": "banana", // name in DB Items
+      "SellPrice": 5.2,
+      "ObjectModel": "p_banana01x"
+    },
+    {
+      "Name": "water", // name in DB Items
       "SellPrice": 5.2,
       "ObjectModel": "p_water01x"
     }

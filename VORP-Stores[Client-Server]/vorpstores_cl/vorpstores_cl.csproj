@@ -59,6 +59,7 @@
     <Compile Include="GetConfig.cs" />
     <Compile Include="Menus\BuyMenu.cs" />
     <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\SellMenu.cs" />
     <Compile Include="StoreActions.cs" />
     <Compile Include="vorpstores_init.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

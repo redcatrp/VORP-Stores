@@ -35,5 +35,6 @@ namespace vorpstores_cl
             ItemsFromDB = JObject.Parse(ifdb);
             vorpstores_init.InitStores();
         }
+
     }
 }

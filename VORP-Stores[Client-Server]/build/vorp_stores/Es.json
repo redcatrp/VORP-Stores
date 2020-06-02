@@ -6,8 +6,14 @@
   "BuyConfirmButtonYes": "Comprar {0} de {1} por ${2}",
   "BuyConfirmButtonNo": "Cancelar compra",
   "SellButton": "Vender",
+  "SellMenuDesc": "Vender Articulos",
+  "SellMenuConfirmDesc": "Confirmar venta",
+  "SellConfirmButtonYes": "Vender {0} de {1} por ${2}",
+  "SellConfirmButtonNo": "Cancelar venta",
   "NoMoney": "No tienes suficiente dinero",
   "NoMore": "No puedes llevar mas {0}",
-  "Buyed":  "Has comprado {0} {1} por ${2}",
+  "NoEnought": "No tienes suficientes articulos",
+  "Bought": "Has comprado {0} {1} por ${2}",
+  "Sold": "Has vendido {0} {1} por ${2}",
   "PressToOpen": "Pulsa [~e~Espacio~q~] para acceder a la tienda"
 }
