@@ -7,5 +7,7 @@
   "BuyConfirmButtonNo": "Cancelar compra",
   "SellButton": "Vender",
   "NoMoney": "No tienes suficiente dinero",
+  "NoMore": "No puedes llevar mas {0}",
+  "Buyed":  "Has comprado {0} {1} por ${2}",
   "PressToOpen": "Pulsa [~e~Espacio~q~] para acceder a la tienda"
 }

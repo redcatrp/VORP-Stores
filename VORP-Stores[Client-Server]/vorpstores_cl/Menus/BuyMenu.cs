@@ -70,8 +70,6 @@ namespace vorpstores_cl.Menus
 
             buyMenu.OnIndexChange += (_menu, _oldItem, _newItem, _oldIndex, _newIndex) =>
             {
-                // Code in here would get executed whenever the up or down key is pressed and the index of the menu is changed.
-                Debug.WriteLine($"OnIndexChange: [{_menu}, {_oldItem}, {_newItem}, {_oldIndex}, {_newIndex}]");
                 StoreActions.CreateObjectOnTable(_newIndex);
             };
 

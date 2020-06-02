@@ -24,11 +24,28 @@ namespace vorpstores_sv
             TriggerEvent("vorp:getCharacter", _source, new Action<dynamic>((user) =>
             {
                 double money = user.money;
-
-                if ((cost * quantity) <= money)
+                double totalCost = (double)(cost * quantity);
+                if (totalCost <= money)
                 {
-                    Debug.WriteLine("Entra " + (cost * quantity).ToString()); 
-                    TriggerEvent("vorp:removeMoney", _source, 0, (double)(cost * quantity));
+                    TriggerEvent("vorpCore:getItemCount", _source, new Action<dynamic>((itemcount) =>
+                    {
+                        int count = itemcount;
+                        int limit = int.Parse(LoadConfig.ItemsFromDB[name]["limit"].ToString());
+                        int hisLimit = limit - count;
+                        if (quantity > hisLimit)
+                        {
+                            source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["NoMore"], LoadConfig.ItemsFromDB[name]["label"].ToString()), 4000);
+                        }
+                        else
+                        {
+                            TriggerEvent("vorp:removeMoney", _source, 0, totalCost);
+                            TriggerEvent("vorpCore:addItem", _source, name, quantity);
+                            source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Buyed"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
+                        }
+
+                    }), name);
+
+
                 }
                 else
                 {
