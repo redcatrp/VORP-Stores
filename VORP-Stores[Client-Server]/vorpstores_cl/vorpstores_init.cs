@@ -1,9 +1,7 @@
 ﻿using CitizenFX.Core;
 using CitizenFX.Core.Native;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace vorpstores_cl
@@ -19,7 +17,7 @@ namespace vorpstores_cl
 
         public static async Task InitStores()
         {
-            await Delay(10000);
+            await Delay(15000);
             Menus.MainMenu.GetMenu();
             string ped = "U_M_M_ValGenStoreOwner_01";
             uint HashPed = (uint)API.GetHashKey(ped);
@@ -48,11 +46,11 @@ namespace vorpstores_cl
                 API.SetEntityNoCollisionEntity(API.PlayerPedId(), _PedShop, false);
                 API.SetEntityCanBeDamaged(_PedShop, false);
                 API.SetEntityInvincible(_PedShop, true);
-                await Delay(1000);
+                await Delay(2000);
                 API.FreezeEntityPosition(_PedShop, true);
-
-                await Delay(100);
             }
+
+            API.SetModelAsNoLongerNeeded(HashPed);
         }
 
         [Tick]

@@ -1,12 +1,6 @@
-﻿using MenuAPI;
-using CitizenFX.Core;
-using static CitizenFX.Core.Native.API;
-using CitizenFX.Core.Native;
-using System;
+﻿using CitizenFX.Core;
+using MenuAPI;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace vorpstores_cl.Menus
 {
@@ -38,9 +32,9 @@ namespace vorpstores_cl.Menus
 
             foreach (var item in GetConfig.Config["ItemsBuy"])
             {
-                MenuListItem _itemToBuy = new MenuListItem(GetConfig.ItemsFromDB[item["Name"].ToString()]["label"].ToString() + $" ${item["BuyPrice"]}" , quantityList, 0, "")
+                MenuListItem _itemToBuy = new MenuListItem(GetConfig.ItemsFromDB[item["Name"].ToString()]["label"].ToString() + $" ${item["BuyPrice"]}", quantityList, 0, "")
                 {
-                
+
                 };
 
                 buyMenu.AddMenuItem(_itemToBuy);
