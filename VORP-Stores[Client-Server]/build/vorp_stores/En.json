@@ -10,7 +10,7 @@
   "SellMenuConfirmDesc": "Confirm",
   "SellConfirmButtonYes": "Sell {0} {1} for ${2}",
   "SellConfirmButtonNo": "Cancel",
-  "NoMoney": "You do not have enought money",
+  "NoMoney": "You do not have enough money",
   "NoMore": "You can not carry more {0}",
   "NoEnought": "You do not have enough articles",
   "Bought": "You bought {0} {1} for ${2}",
