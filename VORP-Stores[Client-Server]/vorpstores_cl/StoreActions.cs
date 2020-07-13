@@ -9,7 +9,7 @@ namespace vorpstores_cl
     {
         private static int ObjectStore;
         private static int CamStore;
-        private static int LaststoreId;
+        public static int LaststoreId;
         public static async Task EnterBuyStore(int storeId)
         {
             LaststoreId = storeId;
@@ -32,6 +32,7 @@ namespace vorpstores_cl
             MenuController.MainMenu.MenuTitle = GetConfig.Config["Stores"][storeId]["name"].ToString();
 
             MenuController.MainMenu.OpenMenu();
+
         }
 
         public static async Task CreateObjectOnTable(int index, string list)
@@ -41,7 +42,7 @@ namespace vorpstores_cl
             float objectY = float.Parse(GetConfig.Config["Stores"][LaststoreId]["SpawnObjectStore"][1].ToString());
             float objectZ = float.Parse(GetConfig.Config["Stores"][LaststoreId]["SpawnObjectStore"][2].ToString());
             float objectH = float.Parse(GetConfig.Config["Stores"][LaststoreId]["SpawnObjectStore"][3].ToString());
-            uint idObject = (uint)GetHashKey(GetConfig.Config[list][index]["ObjectModel"].ToString());
+            uint idObject = (uint)GetHashKey(GetConfig.Config["Stores"][LaststoreId][list][index]["ObjectModel"].ToString());
             await vorpstores_init.LoadModel(idObject);
             ObjectStore = CreateObject(idObject, objectX, objectY, objectZ, false, true, true, true, true);
         }
@@ -66,12 +67,12 @@ namespace vorpstores_cl
 
         public static async Task BuyItemStore(int indexItem, int quantityItem)
         {
-            TriggerServerEvent("vorpstores:buyItems", GetConfig.Config["ItemsBuy"][indexItem]["Name"].ToString(), quantityItem, GetConfig.Config["ItemsBuy"][indexItem]["BuyPrice"].ToObject<double>());
+            TriggerServerEvent("vorpstores:buyItems", GetConfig.Config["Stores"][StoreActions.LaststoreId]["ItemsBuy"][indexItem]["Name"].ToString(), quantityItem, GetConfig.Config["Stores"][StoreActions.LaststoreId]["ItemsBuy"][indexItem]["BuyPrice"].ToObject<double>());
         }
 
         public static async Task SellItemStore(int indexItem, int quantityItem)
         {
-            TriggerServerEvent("vorpstores:sellItems", GetConfig.Config["ItemsSell"][indexItem]["Name"].ToString(), quantityItem, GetConfig.Config["ItemsSell"][indexItem]["SellPrice"].ToObject<double>());
+            TriggerServerEvent("vorpstores:sellItems", GetConfig.Config["Stores"][StoreActions.LaststoreId]["ItemsSell"][indexItem]["Name"].ToString(), quantityItem, GetConfig.Config["Stores"][StoreActions.LaststoreId]["ItemsSell"][indexItem]["SellPrice"].ToObject<double>());
         }
 
     }

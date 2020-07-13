@@ -19,13 +19,12 @@ namespace vorpstores_cl
         {
             await Delay(15000);
             Menus.MainMenu.GetMenu();
-            string ped = "U_M_M_ValGenStoreOwner_01";
-            uint HashPed = (uint)API.GetHashKey(ped);
-            await LoadModel(HashPed);
-
 
             foreach (var store in GetConfig.Config["Stores"])
             {
+                string ped = store["NPCModel"].ToString();
+                uint HashPed = (uint)API.GetHashKey(ped);
+                await LoadModel(HashPed);
                 int blipIcon = int.Parse(store["BlipIcon"].ToString());
                 float x = float.Parse(store["EnterStore"][0].ToString());
                 float y = float.Parse(store["EnterStore"][1].ToString());
@@ -48,9 +47,8 @@ namespace vorpstores_cl
                 API.SetEntityInvincible(_PedShop, true);
                 await Delay(2000);
                 API.FreezeEntityPosition(_PedShop, true);
+                API.SetModelAsNoLongerNeeded(HashPed);
             }
-
-            API.SetModelAsNoLongerNeeded(HashPed);
         }
 
         [Tick]
@@ -68,7 +66,7 @@ namespace vorpstores_cl
                 float z = float.Parse(GetConfig.Config["Stores"][i]["EnterStore"][2].ToString());
                 float radius = float.Parse(GetConfig.Config["Stores"][i]["EnterStore"][3].ToString());
 
-                if (API.GetDistanceBetweenCoords(pCoords.X, pCoords.Y, pCoords.Z, x, y, z, false) <= radius)
+                if (API.GetDistanceBetweenCoords(pCoords.X, pCoords.Y, pCoords.Z, x, y, z, true) <= radius)
                 {
                     await DrawTxt(GetConfig.Langs["PressToOpen"], 0.5f, 0.9f, 0.7f, 0.7f, 255, 255, 255, 255, true, true);
                     if (API.IsControlJustPressed(2, 0xD9D0E1C0))

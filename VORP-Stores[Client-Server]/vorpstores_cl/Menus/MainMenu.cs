@@ -1,5 +1,6 @@
 ﻿using CitizenFX.Core;
 using MenuAPI;
+using System.Collections.Generic;
 
 namespace vorpstores_cl.Menus
 {
@@ -7,6 +8,7 @@ namespace vorpstores_cl.Menus
     {
         private static Menu mainMenu = new Menu("", GetConfig.Langs["DescMainMenu"]);
         private static bool setupDone = false;
+
         private static void SetupMenu()
         {
             if (setupDone) return;
@@ -42,6 +44,7 @@ namespace vorpstores_cl.Menus
             {
                 StoreActions.ExitBuyStore();
             };
+
 
         }
         public static Menu GetMenu()

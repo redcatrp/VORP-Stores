@@ -1,10 +1,11 @@
 ﻿using CitizenFX.Core;
 using MenuAPI;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace vorpstores_cl.Menus
 {
-    class BuyMenu
+    public class BuyMenu
     {
         private static Menu buyMenu = new Menu(GetConfig.Langs["BuyButton"], GetConfig.Langs["BuyMenuDesc"]);
         private static Menu buyMenuConfirm = new Menu("", GetConfig.Langs["BuyMenuConfirmDesc"]);
@@ -13,6 +14,9 @@ namespace vorpstores_cl.Menus
         private static int quantityItem;
 
         private static bool setupDone = false;
+
+        public static List<string> quantityList = new List<string>();
+
         private static void SetupMenu()
         {
             if (setupDone) return;
@@ -24,21 +28,9 @@ namespace vorpstores_cl.Menus
 
             MenuController.AddSubmenu(buyMenu, buyMenuConfirm);
 
-            List<string> quantityList = new List<string>();
             for (var i = 1; i < 101; i++)
             {
-                quantityList.Add($"Cantidad #{i}");
-            }
-
-            foreach (var item in GetConfig.Config["ItemsBuy"])
-            {
-                MenuListItem _itemToBuy = new MenuListItem(GetConfig.ItemsFromDB[item["Name"].ToString()]["label"].ToString() + $" ${item["BuyPrice"]}", quantityList, 0, "")
-                {
-
-                };
-
-                buyMenu.AddMenuItem(_itemToBuy);
-                MenuController.BindMenuItem(buyMenu, buyMenuConfirm, _itemToBuy);
+                quantityList.Add($"{GetConfig.Langs["Quantity"]} #{i}");
             }
 
             MenuItem subMenuConfirmBuyBtnYes = new MenuItem("", " ")
@@ -57,9 +49,9 @@ namespace vorpstores_cl.Menus
             {
                 indexItem = _itemIndex;
                 quantityItem = _listIndex + 1;
-                double totalPrice = double.Parse(GetConfig.Config["ItemsBuy"][_itemIndex]["BuyPrice"].ToString()) * quantityItem;
-                buyMenuConfirm.MenuTitle = GetConfig.ItemsFromDB[GetConfig.Config["ItemsBuy"][_itemIndex]["Name"].ToString()]["label"].ToString();
-                subMenuConfirmBuyBtnYes.Label = string.Format(GetConfig.Langs["BuyConfirmButtonYes"], (_listIndex + 1).ToString(), GetConfig.ItemsFromDB[GetConfig.Config["ItemsBuy"][_itemIndex]["Name"].ToString()]["label"].ToString(), totalPrice.ToString());
+                double totalPrice = double.Parse(GetConfig.Config["Stores"][StoreActions.LaststoreId]["ItemsBuy"][_itemIndex]["BuyPrice"].ToString()) * quantityItem;
+                buyMenuConfirm.MenuTitle = GetConfig.ItemsFromDB[GetConfig.Config["Stores"][StoreActions.LaststoreId]["ItemsBuy"][_itemIndex]["Name"].ToString()]["label"].ToString();
+                subMenuConfirmBuyBtnYes.Label = string.Format(GetConfig.Langs["BuyConfirmButtonYes"], (_listIndex + 1).ToString(), GetConfig.ItemsFromDB[GetConfig.Config["Stores"][StoreActions.LaststoreId]["ItemsBuy"][_itemIndex]["Name"].ToString()]["label"].ToString(), totalPrice.ToString());
             };
 
             buyMenu.OnIndexChange += (_menu, _oldItem, _newItem, _oldIndex, _newIndex) =>
@@ -69,6 +61,19 @@ namespace vorpstores_cl.Menus
 
             buyMenu.OnMenuOpen += (_menu) =>
             {
+                buyMenu.ClearMenuItems();
+
+                foreach (var item in GetConfig.Config["Stores"][StoreActions.LaststoreId]["ItemsBuy"])
+                {
+                    MenuListItem _itemToBuy = new MenuListItem(GetConfig.ItemsFromDB[item["Name"].ToString()]["label"].ToString() + $" ${item["BuyPrice"]}", quantityList, 0, "")
+                    {
+
+                    };
+
+                    buyMenu.AddMenuItem(_itemToBuy);
+                    MenuController.BindMenuItem(buyMenu, buyMenuConfirm, _itemToBuy);
+                }
+
                 StoreActions.CreateObjectOnTable(_menu.CurrentIndex, "ItemsBuy");
             };
 
@@ -88,6 +93,7 @@ namespace vorpstores_cl.Menus
             };
 
         }
+
         public static Menu GetMenu()
         {
             SetupMenu();
