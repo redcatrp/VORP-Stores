@@ -33,7 +33,7 @@ namespace vorpstores_sv
                         }
                         else
                         {
-                            TriggerEvent("vorpCore:canCarryItems", _source, new Action<dynamic>((can) =>
+                            TriggerEvent("vorpCore:canCarryItems", _source, quantity, new Action<dynamic>((can) =>
                             {
                                 if (!can)
                                 {
