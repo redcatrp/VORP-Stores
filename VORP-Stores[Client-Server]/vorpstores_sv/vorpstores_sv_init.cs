@@ -33,9 +33,20 @@ namespace vorpstores_sv
                         }
                         else
                         {
-                            TriggerEvent("vorp:removeMoney", _source, 0, totalCost);
-                            TriggerEvent("vorpCore:addItem", _source, name, quantity);
-                            source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Bought"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
+                            TriggerEvent("vorpCore:canCarryItems", _source, new Action<dynamic>((can) =>
+                            {
+                                if (!can)
+                                {
+                                    source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["NoMore"], LoadConfig.ItemsFromDB[name]["label"].ToString()), 4000);
+                                }
+                                else
+                                {
+                                    TriggerEvent("vorp:removeMoney", _source, 0, totalCost);
+                                    TriggerEvent("vorpCore:addItem", _source, name, quantity);
+                                    source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Bought"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
+                                }
+
+                            }), name);
                         }
 
                     }), name);
