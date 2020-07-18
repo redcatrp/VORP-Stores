@@ -16,49 +16,54 @@ namespace vorpstores_sv
 
             string sid = "steam:" + source.Identifiers["steam"];
 
-            TriggerEvent("vorp:getCharacter", _source, new Action<dynamic>((user) =>
+           
+            TriggerEvent("vorpCore:getItemCount", _source, new Action<dynamic>((itemcount) =>
             {
-                double money = user.money;
-                double totalCost = (double)(cost * quantity);
-                if (totalCost <= money)
+                int count = itemcount;
+                int limit = int.Parse(LoadConfig.ItemsFromDB[name]["limit"].ToString());
+                int hisLimit = limit - count;
+                if (quantity > hisLimit)
                 {
-                    TriggerEvent("vorpCore:getItemCount", _source, new Action<dynamic>((itemcount) =>
+                    source.TriggerEvent("vorp:TipRight", string.Format(LoadConfig.Langs["NoMore"], LoadConfig.ItemsFromDB[name]["label"].ToString()), 4000);
+                }
+                else
+                {
+                    TriggerEvent("vorpCore:canCarryItems", _source, quantity, new Action<bool>((can) =>
                     {
-                        int count = itemcount;
-                        int limit = int.Parse(LoadConfig.ItemsFromDB[name]["limit"].ToString());
-                        int hisLimit = limit - count;
-                        if (quantity > hisLimit)
+                        if (!can)
                         {
-                            source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["NoMore"], LoadConfig.ItemsFromDB[name]["label"].ToString()), 4000);
+                            source.TriggerEvent("vorp:TipRight", string.Format(LoadConfig.Langs["NoMore"], LoadConfig.ItemsFromDB[name]["label"].ToString()), 4000);
                         }
                         else
                         {
-                            TriggerEvent("vorpCore:canCarryItems", _source, quantity, new Action<dynamic>((can) =>
+                            TriggerEvent("vorp:getCharacter", _source, new Action<dynamic>(async (user) =>
                             {
-                                if (!can)
+                                await Delay(100);
+                                double money = user.money;
+                                double totalCost = (double)(cost * quantity);
+                                if (totalCost <= money)
                                 {
-                                    source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["NoMore"], LoadConfig.ItemsFromDB[name]["label"].ToString()), 4000);
+                                    Debug.WriteLine(_source.ToString());
+                                    Debug.WriteLine(name);
+                                    Debug.WriteLine(quantity.ToString());
+                                    Debug.WriteLine(totalCost.ToString());
+                                    TriggerEvent("vorp:removeMoney", _source, 0, totalCost);
+                                    TriggerEvent("vorpCore:addItem", _source, name, quantity);
+                                    //        source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Bought"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
                                 }
                                 else
                                 {
-                                    TriggerEvent("vorp:removeMoney", _source, 0, totalCost);
-                                    TriggerEvent("vorpCore:addItem", _source, name, quantity);
-                                    source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Bought"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
+                                    source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoMoney"], 4000);
                                 }
 
                             }));
                         }
 
-                    }), name);
-
-
-                }
-                else
-                {
-                    source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoMoney"], 4000);
+                    }));
                 }
 
-            }));
+            }), name);
+
         }
 
         private void sellItems([FromSource]Player source, string name, int quantity, double cost)
