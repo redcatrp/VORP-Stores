@@ -46,7 +46,7 @@ namespace vorpstores_sv
                                     source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Bought"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
                                 }
 
-                            }), name);
+                            }));
                         }
 
                     }), name);
