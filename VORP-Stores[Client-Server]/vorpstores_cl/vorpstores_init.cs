@@ -47,6 +47,7 @@ namespace vorpstores_cl
                 API.SetEntityInvincible(_PedShop, true);
                 await Delay(2000);
                 API.FreezeEntityPosition(_PedShop, true);
+                API.SetBlockingOfNonTemporaryEvents(_PedShop, true);
                 API.SetModelAsNoLongerNeeded(HashPed);
             }
         }
