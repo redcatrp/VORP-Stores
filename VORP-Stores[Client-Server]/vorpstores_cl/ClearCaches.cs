@@ -15,8 +15,6 @@ namespace vorpstores_cl
         {
             if (GetCurrentResourceName() != resourceName) return;
 
-            Debug.WriteLine($"{resourceName} cleared blips and NPC's.");
-
             foreach (int blip in vorpstores_init.StoreBlips)
             {
                 int _blip = blip;

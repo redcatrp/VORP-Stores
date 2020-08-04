@@ -56,7 +56,7 @@ namespace vorpstores_sv
             {
                 if (result.Count == 0)
                 {
-                    Debug.WriteLine("ERROR: No Items In DB");
+                    Debug.WriteLine("WARNING: No Items In DB");
                 }
                 else
                 {

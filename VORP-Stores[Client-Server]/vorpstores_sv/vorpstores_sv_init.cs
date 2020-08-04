@@ -22,7 +22,7 @@ namespace vorpstores_sv
                 int count = itemcount;
                 int limit = int.Parse(LoadConfig.ItemsFromDB[name]["limit"].ToString());
                 int hisLimit = limit - count;
-                if (quantity > hisLimit)
+                if (quantity > hisLimit && limit != -1)
                 {
                     source.TriggerEvent("vorp:TipRight", string.Format(LoadConfig.Langs["NoMore"], LoadConfig.ItemsFromDB[name]["label"].ToString()), 4000);
                 }
@@ -43,10 +43,6 @@ namespace vorpstores_sv
                                 double totalCost = (double)(cost * quantity);
                                 if (totalCost <= money)
                                 {
-                                    Debug.WriteLine(_source.ToString());
-                                    Debug.WriteLine(name);
-                                    Debug.WriteLine(quantity.ToString());
-                                    Debug.WriteLine(totalCost.ToString());
                                     TriggerEvent("vorp:removeMoney", _source, 0, totalCost);
                                     TriggerEvent("vorpCore:addItem", _source, name, quantity);
                                     //        source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Bought"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
