@@ -5,10 +5,14 @@ namespace vorpstores_sv
 {
     public class vorpstores_sv_init : BaseScript
     {
+        public static dynamic CORE;
         public vorpstores_sv_init()
         {
             EventHandlers["vorpstores:buyItems"] += new Action<Player, string, int, double>(buyItems);
             EventHandlers["vorpstores:sellItems"] += new Action<Player, string, int, double>(sellItems);
+            TriggerEvent("getCore", new Action<dynamic>((dic) => {
+                CORE = dic;
+            }));
         }
         private void buyItems([FromSource]Player source, string name, int quantity, double cost)
         {
@@ -36,23 +40,18 @@ namespace vorpstores_sv
                         }
                         else
                         {
-                            TriggerEvent("vorp:getCharacter", _source, new Action<dynamic>(async (user) =>
+                            dynamic UserCharacter = CORE.getUser(int.Parse(source.Handle)).getUsedCharacter;
+                            double money = UserCharacter.money;
+                            double totalCost = (double)(cost * quantity);
+                            if(totalCost <= money)
                             {
-                                await Delay(100);
-                                double money = user.money;
-                                double totalCost = (double)(cost * quantity);
-                                if (totalCost <= money)
-                                {
-                                    TriggerEvent("vorp:removeMoney", _source, 0, totalCost);
-                                    TriggerEvent("vorpCore:addItem", _source, name, quantity);
-                                    //        source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Bought"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
-                                }
-                                else
-                                {
-                                    source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoMoney"], 4000);
-                                }
-
-                            }));
+                                UserCharacter.removeCurrency(0, totalCost);
+                                TriggerEvent("vorpCore:addItem", _source, name, quantity);
+                            }
+                            else
+                            {
+                                source.TriggerEvent("vorp:Tip", LoadConfig.Langs["NoMoney"], 4000);
+                            }
                         }
 
                     }));
@@ -72,6 +71,7 @@ namespace vorpstores_sv
 
             TriggerEvent("vorpCore:getItemCount", _source, new Action<dynamic>((itemcount) =>
             {
+                dynamic UserCharacter = CORE.getUser(int.Parse(source.Handle)).getUsedCharacter;
                 int count = itemcount;
                 if (quantity > count)
                 {
@@ -79,11 +79,10 @@ namespace vorpstores_sv
                 }
                 else
                 {
-                    TriggerEvent("vorp:addMoney", _source, 0, totalCost);
+                    UserCharacter.addCurrency(0, totalCost);
                     TriggerEvent("vorpCore:subItem", _source, name, quantity);
                     source.TriggerEvent("vorp:Tip", string.Format(LoadConfig.Langs["Sold"], quantity, LoadConfig.ItemsFromDB[name]["label"].ToString(), totalCost.ToString()), 4000);
                 }
-
             }), name);
 
         }
